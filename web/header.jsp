@@ -36,4 +36,13 @@
         <div class="col">
             <a href="" class="btn btn-primary">Deconnexion</a>
         </div>
+    </div>
 </div>
+<c:if test="${alert != null}">
+    <div class="container">
+        <div class="alert alert-${alert} role="alert">
+            ${message}
+        </div>
+    </div>
+</c:if>
+
