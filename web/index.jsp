@@ -6,8 +6,9 @@
   </head>
   <body>
 
-  <c:out value="bite"/>
+  <c:out value="test"/>
 
 fgdfyhgjhj
+dzafzgre
   </body>
 </html>
