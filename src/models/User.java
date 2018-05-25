@@ -1,6 +1,11 @@
+package models;
+
+import db.Db;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
+
 
 public class User {
     private String email;

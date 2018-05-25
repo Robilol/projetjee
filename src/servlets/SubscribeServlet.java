@@ -1,3 +1,7 @@
+package servlets;
+
+import models.User;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
