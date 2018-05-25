@@ -1,11 +1,6 @@
 package models;
 
-import db.Db;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.util.ArrayList;
-
+import db.UserDAO;
 
 public class User {
     private String email;
@@ -19,16 +14,8 @@ public class User {
     }
 
     public void create() {
-        ArrayList<String> params = new ArrayList<String>();
-
-        params.add(this.email);
-        params.add(this.password);
-        params.add(this.type);
-
-        String baseQuery = "INSERT INTO user(email, password, type) VALUE(?, ?, ?);";
-
-        Db db = new Db();
-        db.execute(baseQuery, params);
+        UserDAO userDao = new UserDAO(this);
+        userDao.create();
     }
 
     public String getEmail() {
