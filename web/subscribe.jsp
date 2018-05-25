@@ -5,8 +5,14 @@
   Time: 11:11
   To change this template use File | Settings | File Templates.
 --%>
-<%@include file="header.jsp"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>Title</title>
+    <%@include file="head.jsp"%>
+</head>
+<body>
+<%@include file="header.jsp"%>
 <div class="container">
     <h1>Créer votre compte</h1>
     <form method="post" action="/subscribe">
@@ -39,3 +45,6 @@
         <button type="submit" class="btn btn-primary float-right">Créer votre compte</button>
     </form>
 </div>
+<%@include file="footer.jsp"%>
+</body>
+</html>
