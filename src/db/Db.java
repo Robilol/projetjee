@@ -3,10 +3,7 @@ package db;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class Db {
@@ -44,12 +41,49 @@ public class Db {
         try {
             PreparedStatement p = this.conn.prepareStatement(query);
 
-            p.setString(1, (String) params.get(0));
-            p.setString(2, (String) params.get(1));
-            p.setString(3, (String) params.get(2));
+            int i = 0;
+
+            for (Object param : params) {
+                p.setString(i+1, (String) params.get(i));
+                i++;
+            }
+
             p.execute();
         } catch (SQLException e) {
 
+        }
+    }
+
+    public ArrayList<String> query(String query, ArrayList params) {
+        try {
+            PreparedStatement p = this.conn.prepareStatement(query);
+
+            int i = 0;
+
+            for (Object param : params) {
+                p.setString(i+1, (String) params.get(i));
+                i++;
+            }
+
+            ResultSet results = p.executeQuery();
+
+            ResultSetMetaData rsmd = results.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+
+            ArrayList<String> arrayResult = new ArrayList<>(columnCount);
+
+
+            while (results.next()) {
+                int j = 1;
+                while(j <= columnCount) {
+                    arrayResult.add(results.getString(j++));
+                }
+            }
+
+            return arrayResult;
+        } catch (SQLException e) {
+            System.out.print(e);
+            return null;
         }
     }
 
