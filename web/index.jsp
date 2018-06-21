@@ -10,7 +10,7 @@
 <div class="container">
   <div class="row">
     <div class="offset-md-3">
-      <form method="post" class="url-form">
+      <form method="post" action="/index" class="url-form">
         <div class="form-group">
           <label for="originUrl">URL à raccourcir</label>
           <input type="text" class="form-control" id="originUrl" name="originUrl" placeholder="Votre URL">

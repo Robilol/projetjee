@@ -7,3 +7,4 @@ $(passwordCheckbox).click(function(e) {
     passwordCheckbox.checked ? passwordField.style.display = 'block' : passwordField.style.display = 'none';
 });
 
+
