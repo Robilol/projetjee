@@ -17,13 +17,13 @@
     </div>
     <div class="row">
         <div class="col">
-            <a href="" class="btn btn-primary">Accueil</a>
+            <a href="/" class="btn btn-primary">Accueil</a>
         </div>
         <div class="col">
             <a href="" class="btn btn-primary">Présentation</a>
         </div>
         <div class="col">
-            <a href="" class="btn btn-primary">Création d'un compte</a>
+            <a href="/subscribe" class="btn btn-primary">Création d'un compte</a>
         </div>
         <div class="col">
             <a href="" class="btn btn-primary">Raccourcir</a>

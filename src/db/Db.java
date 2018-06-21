@@ -41,15 +41,18 @@ public class Db {
     }
 
     public void execute(String query, ArrayList params) {
+        System.out.println("test2");
         try {
             PreparedStatement p = this.conn.prepareStatement(query);
+            int i = 0;
 
-            p.setString(1, (String) params.get(0));
-            p.setString(2, (String) params.get(1));
-            p.setString(3, (String) params.get(2));
+            for (Object param : params) {
+                p.setString(i+1, (String) params.get(i));
+                i++;
+            }
             p.execute();
         } catch (SQLException e) {
-
+            System.out.println(e);
         }
     }
 

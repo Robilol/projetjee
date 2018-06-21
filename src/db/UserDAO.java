@@ -13,6 +13,7 @@ public class UserDAO {
     }
 
     public void create() {
+        System.out.println("testa");
         ArrayList<String> params = new ArrayList<String>();
 
         params.add(this.user.getEmail());

@@ -71,6 +71,26 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./js/url-form.js":
+/*!************************!*\
+  !*** ./js/url-form.js ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var urlForm = document.querySelector('.url-form');
+var passwordCheckbox = urlForm.querySelector('#passwordProtected');
+var passwordCheckboxLabel = urlForm.querySelector('label[for=passwordProtected]');
+var passwordField = urlForm.querySelector('#password');
+$(passwordCheckbox).click(function (e) {
+  passwordCheckbox.checked ? passwordField.style.display = 'block' : passwordField.style.display = 'none';
+});
+
+/***/ }),
+
 /***/ "./node_modules/node-libs-browser/mock/empty.js":
 /*!******************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/empty.js ***!
@@ -1202,13 +1222,15 @@ module.exports = g;
 
 
 // Import skyflow core. Skyflow global object will be available.
-__webpack_require__(/*! skyflow-core */ "./node_modules/skyflow-core/index.js"); // require('')
-// Import configuration from skyflow.config.js
+__webpack_require__(/*! skyflow-core */ "./node_modules/skyflow-core/index.js"); // Import configuration from skyflow.config.js
 
 
 Skyflow.CONF = __webpack_require__(/*! ../skyflow.config */ "./skyflow.config.js"); // Sass files
 
-__webpack_require__(/*! ../scss/app.scss */ "./scss/app.scss");
+__webpack_require__(/*! ../scss/app.scss */ "./scss/app.scss"); // JS files
+
+
+__webpack_require__(/*! ../js/url-form */ "./js/url-form.js");
 
 /***/ })
 
