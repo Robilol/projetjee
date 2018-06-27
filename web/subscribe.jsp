@@ -25,26 +25,25 @@
             <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" required="required">
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="type" id="particulier" value="particulier">
+            <input class="form-check-input" type="radio" name="type" id="particulier" value="particulier" required="required">
             <label class="form-check-label" for="particulier">
                 Particulier
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="type" id="entreprise" value="entreprise">
+            <input class="form-check-input" type="radio" name="type" id="entreprise" value="entreprise" required="required">
             <label class="form-check-label" for="entreprise">
                 Entreprise
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="type" id="association" value="association">
-            <label class="form-check-label" for="association">
-                Association
-            </label>
-        </div>
-        <button type="submit" class="btn btn-primary float-right">Créer votre compte</button>
-    </form>
-</div>
-<%@include file="footer.jsp"%>
-</body>
-</html>
+            <input class="form-check-input" type="radio" name="type" id="association" value="association" required="required">
+            <label class="form-check-label" for="association">eleve = {
+                "nom" => "marc",
+                "age' => 23,
+                "note" => 12
+                }eleve = {
+                "nom" => "marc",
+                "age' => 23,
+                "note" => 12
+                }
