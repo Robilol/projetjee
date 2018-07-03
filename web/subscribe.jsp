@@ -9,47 +9,51 @@
 <html>
 <head>
     <title>Title</title>
-    <%@include file="head.jsp"%>
+    <%@include file="head.jsp" %>
 </head>
 <body>
-<%@include file="header.jsp"%>
+<%@include file="header.jsp" %>
 <div class="container">
     <h1>Créer votre compte</h1>
 
     <c:if test="${!empty token}">
         <div class="alert alert-success">
-           Vous pouvez valider votre compte sur <a href="validate-user?token=${token}">ce lien</a>.
+            Vous pouvez valider votre compte sur <a href="validate-user?token=${token}">ce lien</a>.
         </div>
     </c:if>
     <form method="post" action="/subscribe">
         <div class="form-group">
             <label for="email">Email :</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Votre email" required="required">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Votre email"
+                   required="required">
         </div>
         <div class="form-group">
             <label for="password">Mot de passe :</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" required="required">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe"
+                   required="required">
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="type" id="particulier" value="particulier" required="required">
+            <input class="form-check-input" type="radio" name="type" id="particulier" value="particulier"
+                   required="required">
             <label class="form-check-label" for="particulier">
                 Particulier
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="type" id="entreprise" value="entreprise" required="required">
+            <input class="form-check-input" type="radio" name="type" id="entreprise" value="entreprise"
+                   required="required">
             <label class="form-check-label" for="entreprise">
                 Entreprise
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="type" id="association" value="association" required="required">
-            <label class="form-check-label" for="association">eleve = {
-                "nom" => "marc",
-                "age' => 23,
-                "note" => 12
-                }eleve = {
-                "nom" => "marc",
-                "age' => 23,
-                "note" => 12
-                }
+            <input class="form-check-input" type="radio" name="type" id="association" value="association"
+                   required="required">
+            <label class="form-check-label" for="association">Association</label>
+        </div>
+        <button type="submit" class="btn btn-primary float-right">Créer votre compte</button>
+    </form>
+</div>
+<%@include file="footer.jsp" %>
+</body>
+</html>
