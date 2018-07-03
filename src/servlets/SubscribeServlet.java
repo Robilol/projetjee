@@ -1,6 +1,8 @@
 package servlets;
 
-import models.User;
+
+import db.UserDAO;
+import entities.UserEntity;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -16,6 +18,8 @@ import java.sql.*;
 @WebServlet(name = "SubscribeServlet", urlPatterns = {"/subscribe"})
 public class SubscribeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        UserDAO userDAO = new UserDAO();
+
         System.out.println("cl,sndv");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -27,10 +31,13 @@ public class SubscribeServlet extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/subscribe.jsp").forward(request, response);
         }
 
-        User user = new User(email, password, type);
-        user.create();
+        UserEntity user = new UserEntity();
+        user = userDAO.create(email, password, type);
 
-        response.sendRedirect("/");
+        request.setAttribute("token", user.getToken());
+
+//        response.sendRedirect("/");
+        this.getServletContext().getRequestDispatcher("/subscribe.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

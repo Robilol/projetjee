@@ -1,6 +1,7 @@
 package servlets;
 
-import models.User;
+import db.UserDAO;
+import entities.UserEntity;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        UserDAO userDAO = new UserDAO();
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -24,8 +26,8 @@ public class LoginServlet extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }
 
-        User user = new User();
-        user.find(email, password);
+        UserEntity user = new UserEntity();
+        user = userDAO.find(email, password);
 
         session.setAttribute( "user", user );
 

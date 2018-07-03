@@ -15,6 +15,12 @@
 <%@include file="header.jsp"%>
 <div class="container">
     <h1>Créer votre compte</h1>
+
+    <c:if test="${!empty token}">
+        <div class="alert alert-success">
+           Vous pouvez valider votre compte sur <a href="validate-user?token=${token}">ce lien</a>.
+        </div>
+    </c:if>
     <form method="post" action="/subscribe">
         <div class="form-group">
             <label for="email">Email :</label>
