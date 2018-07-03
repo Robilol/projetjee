@@ -31,13 +31,16 @@
         <div class="col">
             <a href="/account" class="btn btn-primary">Mon compte</a>
         </div>
-        <div class="col">
-            <a href="" class="btn btn-primary">Déconnexion</a>
-        </div>
+
+        <c:if test="${!empty session}">
+            <div class="col">
+                <a href="" class="btn btn-primary">Déconnexion</a>
+            </div>
+        </c:if>
     </div>
     <c:if test="${alert != null}">
         <div class="container">
-            <div class="alert alert-${alert} role="alert">
+            <div class="alert alert-${alert}" role="alert">
                 ${message}
             </div>
         </div>

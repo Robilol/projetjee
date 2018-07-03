@@ -1,6 +1,7 @@
 package servlets;
 
-import models.User;
+
+import entities.UserEntity;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,9 +20,9 @@ public class AccountServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
-        Object user = session.getAttribute("user");
+        UserEntity user = (UserEntity) session.getAttribute("user");
 
-        if (user == "" || user == null) {
+        if (user == null) {
             response.sendRedirect("/login");
         } else {
             this.getServletContext().getRequestDispatcher("/account.jsp").forward(request, response);

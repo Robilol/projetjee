@@ -1,6 +1,8 @@
 package servlets;
 
-import models.Url;
+
+import db.UrlDAO;
+import entities.UrlEntity;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -22,7 +24,8 @@ import java.util.UUID;
 @WebServlet(name = "IndexServlet", urlPatterns = {"/index"})
 public class IndexServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("tetetet");
+        UrlDAO urlDAO = new UrlDAO();
+
         String urlOriginal = request.getParameter("originUrl");
         String urlShort = "";
         String password = request.getParameter("password");
@@ -48,8 +51,7 @@ public class IndexServlet extends HttpServlet {
 
             System.out.println(urlOriginal);
             System.out.println(urlShort);
-            Url url = new Url(0, urlOriginal, urlShort, "", 0, "", "", "");
-            url.create();
+            UrlEntity url = urlDAO.create(-1, urlOriginal, urlShort, password, "", "", "");
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

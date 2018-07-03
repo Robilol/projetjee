@@ -1,54 +1,84 @@
 package db;
 
-import models.User;
+import entities.UserEntity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.persistence.*;
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
 
-    private User user;
+    private static EntityManagerFactory factory = Persistence.createEntityManagerFactory("NewPersistenceUnit");
+    private EntityManager em = factory.createEntityManager();
 
-    public UserDAO(User user) {
-        this.user = user;
+    public UserEntity create(String email, String password, String type) {
+
+        String token = randomString(16);
+
+        UserEntity user = new UserEntity();
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setType(password);
+        user.setToken(token);
+        user.setValidated(0);
+
+        this.em.getTransaction().begin();
+        this.em.persist(user);
+        this.em.getTransaction().commit();
+        return user;
+
     }
-    public UserDAO() { }
 
-    public void create() {
-        System.out.println("testa");
-        ArrayList<String> params = new ArrayList<String>();
-
-        params.add(this.user.getEmail());
-        params.add(this.user.getPassword());
-        params.add(this.user.getType());
-
-        String baseQuery = "INSERT INTO user(email, password, type) VALUE(?, ?, ?);";
-
-        Db db = new Db();
-        db.execute(baseQuery, params);
-    }
-
-    public User find(String email, String password) {
-        ArrayList<String> params = new ArrayList<String>();
-
-        params.add(email);
-        params.add(password);
-
-        String baseQuery = "SELECT * FROM user WHERE email = ? AND password = ? LIMIT 1;";
-
-        Db db = new Db();
-        ArrayList results = db.query(baseQuery, params);
-
-        if (results != null) {
-            User user = new User(Integer.parseInt(results.get(0).toString()), results.get(1).toString(), results.get(2).toString(), results.get(3).toString());
-            return user;
-        } else {
-            return null;
+    public UserEntity find(String email, String password) {
+        UserEntity user = new UserEntity();
+        this.em.getTransaction().begin();
+        Query q = this.em.createQuery("SELECT v FROM UserEntity v WHERE v.email = :email AND v.password = :pass", UserEntity.class).setParameter("email", email).setParameter("pass", password);
+        try {
+            user = (UserEntity) q.getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println(e.getMessage());
         }
+        this.em.getTransaction().commit();
+        return user;
+    }
 
+    public List<UserEntity> all(){
+        List<UserEntity> users = new ArrayList<UserEntity>();
+        this.em.getTransaction().begin();
+        try {
+            users = em.createQuery("SELECT e FROM UserEntity e").getResultList();
+        } catch (NoResultException e) {
+            System.out.println(e.getMessage());
+        }
+        this.em.getTransaction().commit();
 
+        return users;
+    }
 
+    public boolean validateUser(String token) {
+        List<UserEntity> users = all();
+        System.out.println(users);
+        for (UserEntity user : users) {
+            if (user.getToken() != null && user.getToken().equals(token)) {
+                user.setValidated(1);
+                this.em.getTransaction().begin();
+                this.em.persist(user);
+                this.em.getTransaction().commit();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    private static SecureRandom rnd = new SecureRandom();
+
+    String randomString( int len ){
+        StringBuilder sb = new StringBuilder( len );
+        for( int i = 0; i < len; i++ )
+            sb.append( AB.charAt( rnd.nextInt(AB.length()) ) );
+        return sb.toString();
     }
 
 }
