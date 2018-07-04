@@ -16,6 +16,17 @@
 <div class="container">
     <h1>Mes urls :</h1>
 
+    <c:choose>
+        <c:when test="${!empty urls}">
+            <c:forEach var="url" items="${urls}">
+                <div><a href="${url.urlShort}" target="_blank">${url.urlShort}</a></div>
+            </c:forEach>
+        </c:when>
+
+        <c:otherwise>
+            Vous n'avez pas encore créé d'URLs.
+        </c:otherwise>
+    </c:choose>
 
 </div>
 <%@include file="footer.jsp"%>

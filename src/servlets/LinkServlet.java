@@ -16,7 +16,17 @@ import java.net.URL;
 @WebServlet(name = "LinkServlet", urlPatterns = {"/l/*"})
 public class LinkServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        UrlDAO urlDAO = new UrlDAO();
+        String urlShort = request.getParameter("url");
+        String password = request.getParameter("password");
+        UrlEntity url = urlDAO.find(urlShort);
+        if (url != null && password.equals(url.getPassword())) {
+            response.sendRedirect(url.getUrlOriginal());
+        } else {
+            request.setAttribute("url", url);
+            request.setAttribute("danger", "Le mot de passe est incorrect");
+            this.getServletContext().getRequestDispatcher("/link.jsp").forward(request, response);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,7 +53,8 @@ public class LinkServlet extends HttpServlet {
             if (urlObject.getPassword() == null || urlObject.getPassword().equals("")) {
                 response.sendRedirect(urlOriginal);
             } else {
-                // Gérer avec le mdp
+                request.setAttribute("url", urlObject);
+                this.getServletContext().getRequestDispatcher("/link.jsp").forward(request, response);
             }
         } else {
             this.getServletContext().getRequestDispatcher("/link.jsp").forward(request, response);

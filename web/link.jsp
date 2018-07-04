@@ -18,6 +18,22 @@
         <div class="col">
             <h1>Accéder au lien</h1>
 
+            <c:if test="${!empty danger}">
+                <div class="alert alert-danger">
+                    ${danger}
+                </div>
+            </c:if>
+
+            <c:if test="${!empty url.password}">
+                <form action="" method="post">
+                    <div class="form-group">
+                        <label for="password">Mot de passe :</label>
+                        <input type="text" id="password" name="password" class="form-control">
+                    </div>
+                    <input type="hidden" value="${url.urlShort}" name="url">
+                    <input type="submit" class="btn btn-primary">
+                </form>
+            </c:if>
         </div>
     </div>
 </div>

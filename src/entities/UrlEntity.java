@@ -15,6 +15,8 @@ public class UrlEntity {
     private String email;
     private String dateStart;
     private String dateEnd;
+    private Integer maxClics;
+    private Integer clicsCounter;
 
     @Id
     @Column(name = "id")
@@ -126,5 +128,25 @@ public class UrlEntity {
     public int hashCode() {
 
         return Objects.hash(id, userId, urlOriginal, urlShort, password, captcha, email, dateStart, dateEnd);
+    }
+
+    @Basic
+    @Column(name = "max_clics")
+    public Integer getMaxClics() {
+        return maxClics;
+    }
+
+    public void setMaxClics(Integer maxClics) {
+        this.maxClics = maxClics;
+    }
+
+    @Basic
+    @Column(name = "clics_counter")
+    public Integer getClicsCounter() {
+        return clicsCounter;
+    }
+
+    public void setClicsCounter(Integer clicsCounter) {
+        this.clicsCounter = clicsCounter;
     }
 }

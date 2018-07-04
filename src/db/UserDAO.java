@@ -19,7 +19,7 @@ public class UserDAO {
         UserEntity user = new UserEntity();
         user.setEmail(email);
         user.setPassword(password);
-        user.setType(password);
+        user.setType(type);
         user.setToken(token);
         user.setValidated(0);
 
