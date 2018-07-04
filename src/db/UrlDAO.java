@@ -48,10 +48,10 @@ public class UrlDAO {
 
     }
 
-    public UrlEntity find(String email, String password) {
+    public UrlEntity find(String urlShort) {
         UrlEntity url = new UrlEntity();
         this.em.getTransaction().begin();
-        Query q = this.em.createQuery("SELECT v FROM UrlEntity v WHERE v.email = :email AND v.password = :pass", UrlEntity .class).setParameter("email", email).setParameter("pass", password);
+        Query q = this.em.createQuery("SELECT v FROM UrlEntity v WHERE v.urlShort = :urlShort", UrlEntity .class).setParameter("urlShort", urlShort);
         try {
             url = (UrlEntity ) q.getSingleResult();
         } catch (NoResultException e) {
