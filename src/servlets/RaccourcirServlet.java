@@ -16,6 +16,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.UUID;
 
@@ -56,6 +58,8 @@ public class RaccourcirServlet extends HttpServlet {
                 } catch(Exception e) {}
             }
         }
+        LocalDate localDate = LocalDate.now();
+        String dateCreation = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(localDate);
 
         String urlShort = "";
         URL urlObject = new URL(request.getRequestURL().toString());
@@ -81,7 +85,7 @@ public class RaccourcirServlet extends HttpServlet {
             UrlEntity url = null;
             if (user != null) {
                 request.setAttribute("user", user);
-                url = urlDAO.create(user.getId(), urlOriginal, urlShort, password, captcha, timestampFrom, timestampTo, "", maxClics, 0);
+                url = urlDAO.create(user.getId(), urlOriginal, urlShort, password, captcha, timestampFrom, timestampTo, "", maxClics, 0, dateCreation);
                 if (url != null) {
                     request.setAttribute("url", url);
                 }

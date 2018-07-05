@@ -18,9 +18,26 @@
 
     <c:choose>
         <c:when test="${!empty urls}">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Lien raccourci</th>
+                    <th scope="col">Lien original</th>
+                    <th scope="col">Date de création</th>
+                    <th scope="col">Statistiques</th>
+                </tr>
+                </thead>
+                <tbody>
             <c:forEach var="url" items="${urls}">
-                <div><a href="${url.urlShort}" target="_blank">${url.urlShort}</a></div>
+                <tr>
+                    <td><a href="${url.urlShort}" target="_blank">${url.urlShort}</a></td>
+                    <td><a href="${url.urlOriginal}" target="_blank">${url.urlOriginal}</a></td>
+                    <td>${url.dateCreation}</td>
+                    <td><a href="stats?id=${url.id}">Voir</a></td>
+                </tr>
             </c:forEach>
+                </tbody>
+            </table>
         </c:when>
 
         <c:otherwise>

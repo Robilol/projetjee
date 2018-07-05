@@ -17,6 +17,7 @@ public class UrlEntity {
     private String dateEnd;
     private Integer maxClics;
     private Integer clicsCounter;
+    private String dateCreation;
 
     @Id
     @Column(name = "id")
@@ -148,5 +149,15 @@ public class UrlEntity {
 
     public void setClicsCounter(Integer clicsCounter) {
         this.clicsCounter = clicsCounter;
+    }
+
+    @Basic
+    @Column(name = "date_creation")
+    public String getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(String dateCreation) {
+        this.dateCreation = dateCreation;
     }
 }

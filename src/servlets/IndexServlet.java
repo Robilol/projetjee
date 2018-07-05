@@ -19,6 +19,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -34,6 +36,9 @@ public class IndexServlet extends HttpServlet {
         String urlOriginal = request.getParameter("originUrl");
         String urlShort = "";
         String password = request.getParameter("password");
+        LocalDate localDate = LocalDate.now();
+        String dateCreation = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(localDate);
+
         URL urlObject = new URL(request.getRequestURL().toString());
         String host  = urlObject.getHost();
         String userInfo = urlObject.getUserInfo();
@@ -57,12 +62,12 @@ public class IndexServlet extends HttpServlet {
             UrlEntity url = null;
             if (user != null) {
                 request.setAttribute("user", user);
-                url = urlDAO.create(user.getId(), urlOriginal, urlShort, password, "", "", "", "", 0, 0);
+                url = urlDAO.create(user.getId(), urlOriginal, urlShort, password, "", "", "", "", 0, 0, dateCreation);
                 if (url != null) {
                     request.setAttribute("url", url);
                 }
             } else {
-                url = urlDAO.create(-1, urlOriginal, urlShort, password, "", "", "", "", 0, 0);
+                url = urlDAO.create(-1, urlOriginal, urlShort, password, "", "", "", "", 0, 0, dateCreation);
                 if (url != null) {
                     request.setAttribute("url", url);
                 }
