@@ -18,11 +18,11 @@
         <div class="col">
             <h1>Accéder au lien</h1>
 
-            <c:if test="${!empty danger}">
-                <div class="alert alert-danger">
-                    ${danger}
+            <c:forEach items="${alerts}" var="alert">
+                <div class="alert alert-${alert.key}">
+                        ${alert.value}
                 </div>
-            </c:if>
+            </c:forEach>
 
             <c:if test="${!empty maxclics}">
                 <div class="alert alert-danger">
@@ -34,9 +34,18 @@
                 <form action="" method="post">
                     <div class="form-group">
                         <label for="password">Mot de passe :</label>
-                        <input type="text" id="password" name="password" class="form-control">
+                        <input type="text" id="password" name="password" class="form-control" required="required">
                     </div>
                     <input type="hidden" value="${url.urlShort}" name="url">
+
+                    <c:if test="${url.captcha}">
+
+                        <div class="form-group">
+                            <img id="captcha" src="/captcha.jpg" width="120">
+                            <input type="text" name="captchaAnswer" class="form-control" required="required">
+                        </div>
+                    </c:if>
+
                     <input type="submit" class="btn btn-primary">
                 </form>
             </c:if>

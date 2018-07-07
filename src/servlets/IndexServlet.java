@@ -65,13 +65,14 @@ public class IndexServlet extends HttpServlet {
 
             if (user != null) {
                 request.setAttribute("user", user);
-                url = urlDAO.create(user.getId(), urlOriginal, urlShort, password, "", "", "", "", 0, 0, dateCreation);
+
+                url = urlDAO.create(user.getId(), urlOriginal, urlShort, password, false, "", "", "", 0, 0, dateCreation);
 
                 if (url != null) {
                     request.setAttribute("url", url);
                 }
             } else {
-                url = urlDAO.create(-1, urlOriginal, urlShort, password, "", "", "", "", 0, 0, dateCreation);
+                url = urlDAO.create(-1, urlOriginal, urlShort, password, false, "", "", "", 0, 0, dateCreation);
                 if (url != null) {
                     request.setAttribute("url", url);
                 }
