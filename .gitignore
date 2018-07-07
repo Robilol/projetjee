@@ -6,4 +6,4 @@ out/
 node_modules
 web.xml
 persistence.xml
-eclipselink
+eclipselink 
