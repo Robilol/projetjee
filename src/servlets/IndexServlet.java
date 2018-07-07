@@ -1,7 +1,9 @@
 package servlets;
 
 
+import db.ClicDAO;
 import db.UrlDAO;
+import entities.ClicEntity;
 import entities.UrlEntity;
 import entities.UserEntity;
 
@@ -49,7 +51,7 @@ public class IndexServlet extends HttpServlet {
                 "soutquery.query_string");
         try {
             URI uri = new URI(scheme,userInfo,host,port,path,query,null);
-            System.out.println(uri);
+
             if (urlOriginal.equals("")) {
                 request.setAttribute("alert", "danger");
                 request.setAttribute("message", "Erreur : l'URL est vide");
@@ -60,9 +62,11 @@ public class IndexServlet extends HttpServlet {
             }
 
             UrlEntity url = null;
+
             if (user != null) {
                 request.setAttribute("user", user);
                 url = urlDAO.create(user.getId(), urlOriginal, urlShort, password, "", "", "", "", 0, 0, dateCreation);
+
                 if (url != null) {
                     request.setAttribute("url", url);
                 }

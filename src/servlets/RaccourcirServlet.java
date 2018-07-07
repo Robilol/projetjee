@@ -32,8 +32,8 @@ public class RaccourcirServlet extends HttpServlet {
 
         String urlOriginal = request.getParameter("originUrl");
         String password = request.getParameter("password");
-        String captcha = request.getParameter("captcha");
-        int maxClics = Integer.parseInt(request.getParameter("maxClics"));
+        String captcha = request.getParameter("captcha") != null ? request.getParameter("captcha") : "";
+        int maxClics = request.getParameter("maxClicsCheckbox") != null ? Integer.parseInt(request.getParameter("maxClics")) : 0;
         String timestampFrom = null;
         String timestampTo = null;
 

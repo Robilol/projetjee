@@ -31,7 +31,7 @@ public class UserDAO {
     }
 
     public UserEntity find(String email, String password) {
-        UserEntity user = new UserEntity();
+        UserEntity user = null;
         this.em.getTransaction().begin();
         Query q = this.em.createQuery("SELECT v FROM UserEntity v WHERE v.email = :email AND v.password = :pass", UserEntity.class).setParameter("email", email).setParameter("pass", password);
         try {
