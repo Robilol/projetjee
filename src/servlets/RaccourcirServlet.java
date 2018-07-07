@@ -1,13 +1,9 @@
 package servlets;
 
-
 import db.UrlDAO;
 import entities.UrlEntity;
 import entities.UserEntity;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,27 +14,54 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.sql.*;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 import java.util.UUID;
 
-@WebServlet(name = "IndexServlet", urlPatterns = {"/index"})
-public class IndexServlet extends HttpServlet {
+@WebServlet(name = "RaccourcirServlet", urlPatterns = {"/raccourcir"})
+public class RaccourcirServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         HttpSession session = request.getSession();
         UrlDAO urlDAO = new UrlDAO();
 
         UserEntity user = (UserEntity) session.getAttribute("user");
 
         String urlOriginal = request.getParameter("originUrl");
-        String urlShort = "";
         String password = request.getParameter("password");
+        String captcha = request.getParameter("captcha");
+        int maxClics = Integer.parseInt(request.getParameter("maxClics"));
+        String timestampFrom = null;
+        String timestampTo = null;
+
+        if (request.getParameter("date") != null) {
+            if (request.getParameter("date").equals("fromto")) {
+                try {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Date parsedDate = dateFormat.parse(request.getParameter("from"));
+                    timestampFrom = String.valueOf(new Timestamp(parsedDate.getTime()));
+                } catch(Exception e) {}
+
+                try {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Date parsedDate = dateFormat.parse(request.getParameter("to"));
+                    timestampTo = String.valueOf(new Timestamp(parsedDate.getTime()));
+                } catch(Exception e) {}
+            } else if (request.getParameter("date").equals("onlyto")) {
+                try {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Date parsedDate = dateFormat.parse(request.getParameter("only-to"));
+                    timestampTo = String.valueOf(new Timestamp(parsedDate.getTime()));
+                } catch(Exception e) {}
+            }
+        }
         LocalDate localDate = LocalDate.now();
         String dateCreation = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(localDate);
 
+        String urlShort = "";
         URL urlObject = new URL(request.getRequestURL().toString());
         String host  = urlObject.getHost();
         String userInfo = urlObject.getUserInfo();
@@ -52,7 +75,7 @@ public class IndexServlet extends HttpServlet {
             System.out.println(uri);
             if (urlOriginal.equals("")) {
                 request.setAttribute("alert", "danger");
-                request.setAttribute("message", "Erreur : l'URL est vide");
+                request.setAttribute("message", "Erreur : URL vide");
                 this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                 return;
             } else {
@@ -62,12 +85,7 @@ public class IndexServlet extends HttpServlet {
             UrlEntity url = null;
             if (user != null) {
                 request.setAttribute("user", user);
-                url = urlDAO.create(user.getId(), urlOriginal, urlShort, password, "", "", "", "", 0, 0, dateCreation);
-                if (url != null) {
-                    request.setAttribute("url", url);
-                }
-            } else {
-                url = urlDAO.create(-1, urlOriginal, urlShort, password, "", "", "", "", 0, 0, dateCreation);
+                url = urlDAO.create(user.getId(), urlOriginal, urlShort, password, captcha, timestampFrom, timestampTo, "", maxClics, 0, dateCreation);
                 if (url != null) {
                     request.setAttribute("url", url);
                 }
@@ -77,15 +95,12 @@ public class IndexServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+
+
+        this.getServletContext().getRequestDispatcher("/raccourcir.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        UserEntity user = (UserEntity) session.getAttribute("user");
-        if (user != null) {
-            request.setAttribute("user", user);
-        }
-        this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+        this.getServletContext().getRequestDispatcher("/raccourcir.jsp").forward(request, response);
     }
 }
