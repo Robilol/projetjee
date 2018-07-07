@@ -44,8 +44,8 @@ public class LinkServlet extends HttpServlet {
 
             if (url.getPassword() != null && url.getPassword() != "") {
                 if (!password.equals(url.getPassword())) {
-                    alerts.put("danger", "Le nombre maximum de clics autorisés sur ce lien a été atteint.");
-                    checks.put("maxclic", false);
+                    alerts.put("danger", "Le mot de passe est incorrect.");
+                    checks.put("password", false);
                 }
             }
 
@@ -54,13 +54,6 @@ public class LinkServlet extends HttpServlet {
                     alerts.put("danger", "Le captcha est incorrect");
                     checks.put("captcha", false);
                 }
-            }
-
-            if (url.getMaxClics() == 0 || url.getClicsCounter() < url.getMaxClics()) {
-                alerts.put("danger", "Le captcha est incorrect");
-                checks.put("captcha", false);
-            } else {
-                urlDAO.addClic(url.getId());
             }
         } else {
             request.setAttribute("url", url);
@@ -74,6 +67,7 @@ public class LinkServlet extends HttpServlet {
             request.setAttribute("alerts", alerts);
             this.getServletContext().getRequestDispatcher("/link.jsp").forward(request, response);
         } else {
+            urlDAO.addClic(url.getId());
             response.sendRedirect(url.getUrlOriginal());
         }
 
@@ -108,16 +102,22 @@ public class LinkServlet extends HttpServlet {
 
 
             /* Si le lien n'a pas atteint son max de clics autorisés */
-            if ((urlObject.getMaxClics() != 0 && urlObject.getClicsCounter() < urlObject.getMaxClics()) || (urlObject.getMaxClics() == 0)) {
-                urlDAO.addClic(urlObject.getId());
-                response.sendRedirect(urlOriginal);
+            if ((urlObject.getMaxClics() != 0 && urlObject.getClicsCounter() < urlObject.getMaxClics()) || urlObject.getMaxClics() == 0) {
+
+                if ((urlObject.getPassword() != null && urlObject.getPassword() != "") || urlObject.getCaptcha()) {
+                    request.setAttribute("url", urlObject);
+                    this.getServletContext().getRequestDispatcher("/link.jsp").forward(request, response);
+                } else {
+                    urlDAO.addClic(urlObject.getId());
+                    response.sendRedirect(urlOriginal);
+                }
+
             } else {
-                request.setAttribute("url", url);
+                request.setAttribute("url", urlObject);
                 request.setAttribute("maxclics", "Le nombre maximum de clics autorisés sur ce lien a été atteint.");
                 this.getServletContext().getRequestDispatcher("/link.jsp").forward(request, response);
             }
         } else {
-            request.setAttribute("url", url);
             alerts.put("danger", "L'url n'existe pas");
             this.getServletContext().getRequestDispatcher("/link.jsp").forward(request, response);
         }
