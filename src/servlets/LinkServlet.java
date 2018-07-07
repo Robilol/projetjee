@@ -98,6 +98,9 @@ public class LinkServlet extends HttpServlet {
             e.printStackTrace();
         }
 
+        Map<String, String> alerts = new HashMap<>();
+
+
         if (uri != null) {
             urlShort = uri.toString() + "/l" + request.getPathInfo();
             UrlEntity urlObject = urlDAO.find(urlShort);
@@ -109,15 +112,16 @@ public class LinkServlet extends HttpServlet {
                 urlDAO.addClic(urlObject.getId());
                 response.sendRedirect(urlOriginal);
             } else {
+                request.setAttribute("url", url);
                 request.setAttribute("maxclics", "Le nombre maximum de clics autorisés sur ce lien a été atteint.");
                 this.getServletContext().getRequestDispatcher("/link.jsp").forward(request, response);
             }
+        } else {
+            request.setAttribute("url", url);
+            alerts.put("danger", "L'url n'existe pas");
+            this.getServletContext().getRequestDispatcher("/link.jsp").forward(request, response);
         }
 
-
-        request.setAttribute("url", url);
-
-        this.getServletContext().getRequestDispatcher("/link.jsp").forward(request, response);
     }
 
 }
