@@ -28,10 +28,17 @@ public class LoginServlet extends HttpServlet {
 
         UserEntity user = new UserEntity();
         user = userDAO.find(email, password);
+        System.out.println(user);
 
-        session.setAttribute( "user", user );
+        if (user != null) {
+            session.setAttribute( "user", user );
+            request.setAttribute("success", "Vous êtes connecté");
+            this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+        } else {
+            request.setAttribute("danger", "Les identifiants sont incorrects");
+            this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+        }
 
-        response.sendRedirect("/");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -17,6 +17,11 @@
     <div class="row">
         <div class="col">
             <h1>Se connecter</h1>
+            <c:if test="${!empty danger}">
+                <div class="alert alert-danger">
+                    ${danger}
+                </div>
+            </c:if>
             <form method="post" action="/login">
                 <div class="form-group">
                     <label for="email">Email :</label>

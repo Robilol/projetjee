@@ -24,6 +24,12 @@
                 </div>
             </c:if>
 
+            <c:if test="${!empty maxclics}">
+                <div class="alert alert-danger">
+                        ${maxclics}
+                </div>
+            </c:if>
+
             <c:if test="${!empty url.password}">
                 <form action="" method="post">
                     <div class="form-group">

@@ -36,9 +36,22 @@ public class UrlDAO {
     public UrlEntity find(String urlShort) {
         UrlEntity url = new UrlEntity();
         this.em.getTransaction().begin();
-        Query q = this.em.createQuery("SELECT v FROM UrlEntity v WHERE v.urlShort = :urlShort", UrlEntity .class).setParameter("urlShort", urlShort);
+        Query q = this.em.createQuery("SELECT v FROM UrlEntity v WHERE v.urlShort = :urlShort", UrlEntity.class).setParameter("urlShort", urlShort);
         try {
             url = (UrlEntity ) q.getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println(e.getMessage());
+        }
+        this.em.getTransaction().commit();
+        return url;
+    }
+
+    public UrlEntity findById(int urlId) {
+        UrlEntity url = null;
+        this.em.getTransaction().begin();
+        Query q = this.em.createQuery("SELECT v FROM UrlEntity v WHERE v.id = :urlId", UrlEntity.class).setParameter("urlId", urlId);
+        try {
+            url = (UrlEntity) q.getSingleResult();
         } catch (NoResultException e) {
             System.out.println(e.getMessage());
         }
@@ -49,7 +62,7 @@ public class UrlDAO {
     public List<UrlEntity > findByUser(String userId) {
         List<UrlEntity > urls = new ArrayList<UrlEntity >();
         this.em.getTransaction().begin();
-        Query q = this.em.createQuery("SELECT v FROM UrlEntity v WHERE v.userId = :userId", UrlEntity .class).setParameter("userId", userId);
+        Query q = this.em.createQuery("SELECT v FROM UrlEntity v WHERE v.userId = :userId", UrlEntity.class).setParameter("userId", userId);
         try {
             urls = q.getResultList();
         } catch (NoResultException e) {
@@ -68,6 +81,19 @@ public class UrlDAO {
             System.out.println(e.getMessage());
         }
         return urls;
+    }
+
+    public void addClic(int urlId) {
+        UrlEntity url = null;
+        url = findById(urlId);
+
+        if (url != null) {
+            url.setClicsCounter(url.getClicsCounter() + 1);
+            this.em.getTransaction().begin();
+            this.em.persist(url);
+            this.em.getTransaction().commit();
+        }
+
     }
 
 }

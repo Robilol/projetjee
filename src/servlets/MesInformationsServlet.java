@@ -16,7 +16,6 @@ public class MesInformationsServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-
         Object user = session.getAttribute("user");
 
         if (user == "" || user == null) {

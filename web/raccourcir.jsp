@@ -39,7 +39,7 @@
                         </div>
 
                         <div class="form-check form-check-inline">
-                            <input type="checkbox" class="form-check-input" id="maxClics">
+                            <input type="checkbox" class="form-check-input" id="maxClics" name="maxClicsCheckbox">
                             <label class="form-check-label" for="maxClics" style="    width: 60%;">Max de clics :</label> <input type="text" name="maxClics" class="form-control form-control-inline">
                         </div>
 

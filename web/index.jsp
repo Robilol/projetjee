@@ -10,6 +10,12 @@
 <div class="container">
   <div class="row">
     <div class="col mt-3">
+      <c:if test="${!empty success}">
+        <div class="alert alert-success">
+            ${success}
+        </div>
+      </c:if>
+
       <c:if test="${!empty alert}">
           <div class="alert alert-${alert}" role="alert">
               ${message}
