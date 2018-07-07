@@ -32,8 +32,15 @@ public class RaccourcirServlet extends HttpServlet {
 
         String urlOriginal = request.getParameter("originUrl");
         String password = request.getParameter("password");
-        String captcha = request.getParameter("captcha") != null ? request.getParameter("captcha") : "";
+        String captcha = request.getParameter("captcha");
+        boolean captchaBool =false;
+
+        if (captcha == "on") {
+            captchaBool = true;
+        }
+
         int maxClics = request.getParameter("maxClicsCheckbox") != null ? Integer.parseInt(request.getParameter("maxClics")) : 0;
+
         String timestampFrom = null;
         String timestampTo = null;
 
@@ -85,7 +92,7 @@ public class RaccourcirServlet extends HttpServlet {
             UrlEntity url = null;
             if (user != null) {
                 request.setAttribute("user", user);
-                url = urlDAO.create(user.getId(), urlOriginal, urlShort, password, captcha, timestampFrom, timestampTo, "", maxClics, 0, dateCreation);
+                url = urlDAO.create(user.getId(), urlOriginal, urlShort, password, captchaBool, timestampFrom, timestampTo, "", maxClics, 0, dateCreation);
                 if (url != null) {
                     request.setAttribute("url", url);
                 }
