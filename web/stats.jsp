@@ -17,7 +17,7 @@
 <div class="container">
     <h1>Statistiques du lien</h1>
 
-    <canvas id="chart" width="400" height="400"></canvas>
+    <canvas id="chart" width="400" height="200"></canvas>
 
     <c:choose>
         <c:when test="${!empty url}">
@@ -56,7 +56,7 @@
     var data = [];
 
     <c:forEach items="${stats}" var="stat">
-        labels.push(${stat.key});
+        labels.push("${stat.key}");
         data.push(${stat.value});
     </c:forEach>
 
