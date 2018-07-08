@@ -19,6 +19,13 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -93,32 +100,68 @@ public class LinkServlet extends HttpServlet {
         }
 
         Map<String, String> alerts = new HashMap<>();
+        Map<String, Boolean> checks = new HashMap<>();
 
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date today = Calendar.getInstance().getTime();
 
         if (uri != null) {
             urlShort = uri.toString() + "/l" + request.getPathInfo();
             UrlEntity urlObject = urlDAO.find(urlShort);
             String urlOriginal = urlObject.getUrlOriginal();
 
+            if (urlObject.getMaxClics() != 0 && urlObject.getClicsCounter() > urlObject.getMaxClics()) {
+                alerts.put("danger", "Le nombre maximum de clics autorisés sur ce lien a été atteint.");
+                checks.put("clic", false);
+                request.setAttribute("alerts", alerts);
+            }
 
-            /* Si le lien n'a pas atteint son max de clics autorisés */
-            if ((urlObject.getMaxClics() != 0 && urlObject.getClicsCounter() < urlObject.getMaxClics()) || urlObject.getMaxClics() == 0) {
+            Date dateStart = null;
+            Date dateEnd = null;
 
-                if ((urlObject.getPassword() != null && urlObject.getPassword() != "") || urlObject.getCaptcha()) {
-                    request.setAttribute("url", urlObject);
-                    this.getServletContext().getRequestDispatcher("/link.jsp").forward(request, response);
-                } else {
-                    urlDAO.addClic(urlObject.getId());
-                    response.sendRedirect(urlOriginal);
+            if (urlObject.getDateStart() != null) {
+                try {
+                    dateStart = format.parse(urlObject.getDateStart());
+                } catch (ParseException e) {
+
                 }
+            }
 
+            if (urlObject.getDateEnd() != null) {
+                try {
+                    dateEnd = format.parse(urlObject.getDateEnd());
+                } catch (ParseException e) {
+
+                }
+            }
+
+
+            if (urlObject.getDateStart() == null && dateEnd.compareTo(today) < 0) {
+                alerts.put("danger", "La date de validité est dépassé");
+                checks.put("date to", false);
+                request.setAttribute("alerts", alerts);
+            }
+
+            if (urlObject.getDateStart() != null && (dateStart.compareTo(today) > 0 || dateEnd.compareTo(today) < 0)) {
+                alerts.put("danger", "La date de validité est dépassé ou le lien n'est pas encore disponible");
+                checks.put("date interval", false);
+                request.setAttribute("alerts", alerts);
+            }
+
+            if (checks.containsValue(false)) {
+                request.setAttribute("url", urlObject);
+                request.setAttribute("alerts", alerts);
+                this.getServletContext().getRequestDispatcher("/link.jsp").forward(request, response);
             } else {
                 request.setAttribute("url", urlObject);
-                request.setAttribute("maxclics", "Le nombre maximum de clics autorisés sur ce lien a été atteint.");
                 this.getServletContext().getRequestDispatcher("/link.jsp").forward(request, response);
             }
+
         } else {
             alerts.put("danger", "L'url n'existe pas");
+            request.setAttribute("alerts", alerts);
+
             this.getServletContext().getRequestDispatcher("/link.jsp").forward(request, response);
         }
 
