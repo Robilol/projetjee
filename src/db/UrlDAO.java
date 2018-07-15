@@ -1,8 +1,11 @@
 package db;
 
+import entities.ClicEntity;
 import entities.UrlEntity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,10 +90,19 @@ public class UrlDAO {
         UrlEntity url = null;
         url = findById(urlId);
 
+        LocalDate localDate = LocalDate.now();
+        String dateCreation = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(localDate);
+
+
         if (url != null) {
+            ClicEntity clic = new ClicEntity();
+            clic.setUrlId(urlId);
+            clic.setDate(dateCreation);
+
             url.setClicsCounter(url.getClicsCounter() + 1);
             this.em.getTransaction().begin();
             this.em.persist(url);
+            this.em.persist(clic);
             this.em.getTransaction().commit();
         }
 

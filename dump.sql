@@ -16,6 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `clic`
+--
+
+DROP TABLE IF EXISTS `clic`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `clic` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url_id` int(11) DEFAULT NULL,
+  `date` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clic`
+--
+
+LOCK TABLES `clic` WRITE;
+/*!40000 ALTER TABLE `clic` DISABLE KEYS */;
+INSERT INTO `clic` VALUES (2,43,'2018-07-01'),(3,43,'2018-07-01'),(4,43,'2018-07-01'),(5,43,'2018-07-01'),(6,43,'2018-07-01'),(7,43,'2018-07-01'),(8,43,'2018-07-01'),(9,43,'2018-07-01'),(10,43,'2018-07-01'),(11,43,'2018-07-02'),(12,43,'2018-07-02'),(13,43,'2018-07-02'),(14,43,'2018-07-05'),(15,43,'2018-07-05'),(16,43,'2018-07-05'),(17,43,'2018-07-05'),(18,43,'2018-07-05'),(19,43,'2018-07-05'),(20,43,'2018-07-05'),(21,43,'2018-07-08'),(22,43,'2018-07-08'),(23,43,'2018-07-08'),(24,43,'2018-07-08'),(25,43,'2018-07-08'),(26,43,'2018-07-08'),(27,43,'2018-07-08'),(28,43,'2018-07-08'),(29,43,'2018-07-08'),(30,43,'2018-07-08'),(31,43,'2018-07-08'),(32,43,'2018-07-08'),(33,43,'2018-07-08'),(34,43,'2018-07-08'),(35,43,'2018-07-08'),(36,43,'2018-07-08'),(37,43,'2018-07-09'),(38,43,'2018-07-09'),(39,43,'2018-07-09'),(40,43,'2018-07-09'),(41,43,'2018-07-09'),(42,43,'2018-07-10'),(43,43,'2018-07-10'),(44,43,'2018-07-10'),(45,43,'2018-07-10'),(46,43,'2018-07-10'),(47,43,'2018-07-10'),(48,43,'2018-07-10'),(49,43,'2018-07-10'),(50,43,'2018-07-10'),(51,43,'2018-07-10');
+/*!40000 ALTER TABLE `clic` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `url`
 --
 
@@ -36,7 +61,7 @@ CREATE TABLE `url` (
   `max_clics` int(11) DEFAULT NULL,
   `date_creation` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +70,7 @@ CREATE TABLE `url` (
 
 LOCK TABLES `url` WRITE;
 /*!40000 ALTER TABLE `url` DISABLE KEYS */;
-INSERT INTO `url` VALUES (22,'0','https://www.youtube.com/','http://localhost:8282/index3fe5149b9544db59','','0','','','',0,NULL,NULL),(23,'0','','','','0','','','',0,NULL,NULL),(24,'0','','','','0','','','',0,NULL,NULL),(25,'0','','','','0','','','',0,NULL,NULL),(26,'0','https://github.com/Robilol/projetjee/issues','http://localhost:8282/3fe11e8bf3800788','','0','','','',0,NULL,NULL),(27,'0','https://github.com/Robilol/projetjee/issues','http://localhost:8282/3fe4','','0','','','',0,NULL,NULL),(28,'0','https://github.com/Robilol/projetjee/issues','http://localhost:8282/3fcf','','0','','','',0,NULL,NULL),(29,'0','https://github.com/davidkiss/yourl/blob/master/src/main/java/com/yourl/controller/dto/ShortenUrlRequest.java','http://localhost:8282/3fd7','','0','','','',0,NULL,NULL),(30,'0','https://github.com/davidkiss/yourl/blob/master/src/main/java/com/yourl/controller/dto/ShortenUrlRequest.java','http://localhost:8282/3fd5','','0','','','',0,NULL,NULL),(31,'0','https://github.com/davidkiss/yourl/blob/master/src/main/java/com/yourl/controller/dto/ShortenUrlRequest.java','http://localhost:8282/3fd8','','0','','','',0,NULL,NULL),(32,'0','https://github.com/davidkiss/yourl/blob/master/src/main/java/com/yourl/controller/dto/ShortenUrlRequest.java','http://localhost:8282/3fcf','','0','','','',0,NULL,NULL),(33,'0','https://stackoverflow.com/questions/41107/how-to-generate-a-random-alpha-numeric-string','http://localhost:8282/9767','','0','','','',0,NULL,NULL),(34,'0','https://stackoverflow.com/questions/41107/how-to-generate-a-random-alpha-numeric-string','http://localhost:8282/6f96','','0','','','',0,NULL,NULL),(35,'0','https://stackoverflow.com/questions/41107/how-to-generate-a-random-alpha-numeric-string','http://localhost:8282/b3ad','','0','','','',0,NULL,NULL),(36,'0','https://stackoverflow.com/questions/41107/how-to-generate-a-random-alpha-numeric-string','http://localhost:8282/1047','','0','','','',0,NULL,NULL),(37,'0','https://stackoverflow.com/questions/41107/how-to-generate-a-random-alpha-numeric-string','http://localhost:8282/0175','','0','','','',0,NULL,NULL),(38,'0','https://stackoverflow.com/questions/41107/how-to-generate-a-random-alpha-numeric-string','http://localhost:8282/99c7','','0','','','',0,NULL,NULL),(39,'13','http://guillaumepn.free.fr/','http://localhost:8282/l/306d','bla','1','',NULL,'2018-07-24 00:00:00.0',5,100,'2018-07-07'),(40,'13','http://guillaumepn.free.fr/','http://localhost:8282/l/4258','tfghj','0','',NULL,NULL,0,0,'2018-07-07'),(41,'13','http://guillaumepn.free.fr/','http://localhost:8282/l/1a92','ertyu','0','',NULL,NULL,0,0,'2018-07-07');
+INSERT INTO `url` VALUES (22,'0','https://www.youtube.com/','http://localhost:8282/index3fe5149b9544db59','','0','','','',0,NULL,NULL),(23,'0','','','','0','','','',0,NULL,NULL),(24,'0','','','','0','','','',0,NULL,NULL),(25,'0','','','','0','','','',0,NULL,NULL),(26,'0','https://github.com/Robilol/projetjee/issues','http://localhost:8282/3fe11e8bf3800788','','0','','','',0,NULL,NULL),(27,'0','https://github.com/Robilol/projetjee/issues','http://localhost:8282/3fe4','','0','','','',0,NULL,NULL),(28,'0','https://github.com/Robilol/projetjee/issues','http://localhost:8282/3fcf','','0','','','',0,NULL,NULL),(29,'0','https://github.com/davidkiss/yourl/blob/master/src/main/java/com/yourl/controller/dto/ShortenUrlRequest.java','http://localhost:8282/3fd7','','0','','','',0,NULL,NULL),(30,'0','https://github.com/davidkiss/yourl/blob/master/src/main/java/com/yourl/controller/dto/ShortenUrlRequest.java','http://localhost:8282/3fd5','','0','','','',0,NULL,NULL),(31,'0','https://github.com/davidkiss/yourl/blob/master/src/main/java/com/yourl/controller/dto/ShortenUrlRequest.java','http://localhost:8282/3fd8','','0','','','',0,NULL,NULL),(32,'0','https://github.com/davidkiss/yourl/blob/master/src/main/java/com/yourl/controller/dto/ShortenUrlRequest.java','http://localhost:8282/3fcf','','0','','','',0,NULL,NULL),(33,'0','https://stackoverflow.com/questions/41107/how-to-generate-a-random-alpha-numeric-string','http://localhost:8282/9767','','0','','','',0,NULL,NULL),(34,'0','https://stackoverflow.com/questions/41107/how-to-generate-a-random-alpha-numeric-string','http://localhost:8282/6f96','','0','','','',0,NULL,NULL),(35,'0','https://stackoverflow.com/questions/41107/how-to-generate-a-random-alpha-numeric-string','http://localhost:8282/b3ad','','0','','','',0,NULL,NULL),(36,'0','https://stackoverflow.com/questions/41107/how-to-generate-a-random-alpha-numeric-string','http://localhost:8282/1047','','0','','','',0,NULL,NULL),(37,'0','https://stackoverflow.com/questions/41107/how-to-generate-a-random-alpha-numeric-string','http://localhost:8282/0175','','0','','','',0,NULL,NULL),(38,'0','https://stackoverflow.com/questions/41107/how-to-generate-a-random-alpha-numeric-string','http://localhost:8282/99c7','','0','','','',0,NULL,NULL),(39,'13','dateto','http://localhost:8282/l/306d','bla','1','',NULL,NULL,5,100,'2018-07-07'),(40,'13','interval','http://localhost:8282/l/4258','tfghj','0','','2018-07-01 00:00:00.0','2018-07-02 00:00:00.0',0,0,'2018-07-07'),(41,'13','http://guillaumepn.free.fr/','http://localhost:8282/l/1a92','ertyu','0','',NULL,NULL,0,0,'2018-07-07'),(42,'13','testclic','http://localhost:8282/l/3c9d','','0','',NULL,NULL,0,0,'2018-07-08'),(43,'13','http://wooly.cat/','http://localhost:8282/l/b89d','','0','',NULL,NULL,10,0,'2018-07-08');
 /*!40000 ALTER TABLE `url` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,4 +111,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-07 18:17:30
+-- Dump completed on 2018-07-08 15:14:02

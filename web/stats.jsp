@@ -10,11 +10,14 @@
 <head>
     <title>Title</title>
     <%@include file="head.jsp"%>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
 </head>
 <body>
 <%@include file="header.jsp"%>
 <div class="container">
     <h1>Statistiques du lien</h1>
+
+    <canvas id="chart" width="400" height="200"></canvas>
 
     <c:choose>
         <c:when test="${!empty url}">
@@ -45,4 +48,27 @@
 </div>
 <%@include file="footer.jsp"%>
 </body>
+
+<script type="text/javascript">
+    var ctx = document.getElementById("chart");
+
+    var labels = [];
+    var data = [];
+
+    <c:forEach items="${stats}" var="stat">
+        labels.push("${stat.key}");
+        data.push(${stat.value});
+    </c:forEach>
+
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Nombre de clics',
+                data: data,
+            }]
+        },
+    });
+</script>
 </html>

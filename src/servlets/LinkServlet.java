@@ -137,13 +137,13 @@ public class LinkServlet extends HttpServlet {
             }
 
 
-            if (urlObject.getDateStart() == null && dateEnd.compareTo(today) < 0) {
+            if (urlObject.getDateStart() == null && urlObject.getDateEnd() != null && dateEnd.compareTo(today) < 0) {
                 alerts.put("danger", "La date de validité est dépassé");
                 checks.put("date to", false);
                 request.setAttribute("alerts", alerts);
             }
 
-            if (urlObject.getDateStart() != null && (dateStart.compareTo(today) > 0 || dateEnd.compareTo(today) < 0)) {
+            if (urlObject.getDateStart() != null && urlObject.getDateEnd() != null && (dateStart.compareTo(today) > 0 || dateEnd.compareTo(today) < 0)) {
                 alerts.put("danger", "La date de validité est dépassé ou le lien n'est pas encore disponible");
                 checks.put("date interval", false);
                 request.setAttribute("alerts", alerts);
@@ -154,8 +154,8 @@ public class LinkServlet extends HttpServlet {
                 request.setAttribute("alerts", alerts);
                 this.getServletContext().getRequestDispatcher("/link.jsp").forward(request, response);
             } else {
-                request.setAttribute("url", urlObject);
-                this.getServletContext().getRequestDispatcher("/link.jsp").forward(request, response);
+                urlDAO.addClic(urlObject.getId());
+                response.sendRedirect(urlObject.getUrlOriginal());
             }
 
         } else {
