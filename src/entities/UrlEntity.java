@@ -11,7 +11,7 @@ public class UrlEntity {
     private String urlOriginal;
     private String urlShort;
     private String password;
-    private boolean captcha;
+    private int captcha;
     private String email;
     private String dateStart;
     private String dateEnd;
@@ -71,11 +71,11 @@ public class UrlEntity {
 
     @Basic
     @Column(name = "captcha")
-    public boolean getCaptcha() {
+    public int getCaptcha() {
         return captcha;
     }
 
-    public void setCaptcha(boolean captcha) {
+    public void setCaptcha(int captcha) {
         this.captcha = captcha;
     }
 

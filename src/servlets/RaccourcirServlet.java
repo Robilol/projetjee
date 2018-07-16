@@ -33,10 +33,10 @@ public class RaccourcirServlet extends HttpServlet {
         String urlOriginal = request.getParameter("originUrl");
         String password = request.getParameter("password");
         String captcha = request.getParameter("captcha");
-        boolean captchaBool =false;
+        int captchaBool = 0;
 
-        if (captcha == "on") {
-            captchaBool = true;
+        if (captcha.equals("on")) {
+            captchaBool = 1;
         }
 
         int maxClics = request.getParameter("maxClicsCheckbox") != null ? Integer.parseInt(request.getParameter("maxClics")) : 0;

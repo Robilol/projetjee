@@ -49,14 +49,14 @@ public class LinkServlet extends HttpServlet {
 
         if (url != null) {
 
-            if (url.getPassword() != null && url.getPassword() != "") {
+            if (url.getPassword() != null && !url.getPassword().equals("")) {
                 if (!password.equals(url.getPassword())) {
                     alerts.put("danger", "Le mot de passe est incorrect.");
                     checks.put("password", false);
                 }
             }
 
-            if (url.getCaptcha()) {
+            if (url.getCaptcha() == 1) {
                 if (!captcha.isCorrect(captchaAnswer)) {
                     alerts.put("danger", "Le captcha est incorrect");
                     checks.put("captcha", false);
@@ -134,6 +134,14 @@ public class LinkServlet extends HttpServlet {
                 } catch (ParseException e) {
 
                 }
+            }
+
+            if (urlObject.getPassword() != "") {
+                checks.put("password", false);
+            }
+
+            if (urlObject.getCaptcha() == 1) {
+                checks.put("captcha", false);
             }
 
 

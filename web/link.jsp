@@ -38,7 +38,7 @@
                     </div>
                     <input type="hidden" value="${url.urlShort}" name="url">
 
-                    <c:if test="${url.captcha}">
+                    <c:if test="${url.captcha == 1}">
 
                         <div class="form-group">
                             <img id="captcha" src="/captcha.jpg" width="120">

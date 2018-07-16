@@ -14,7 +14,7 @@ public class UrlDAO {
     private static EntityManagerFactory factory = Persistence.createEntityManagerFactory("NewPersistenceUnit");
     private EntityManager em = factory.createEntityManager();
 
-    public UrlEntity create(int userId, String urlOriginal, String urlShort, String password, boolean captcha, String dateStart, String dateEnd, String email, int maxClics, int clicsCounter, String dateCreation) {
+    public UrlEntity create(int userId, String urlOriginal, String urlShort, String password, int captcha, String dateStart, String dateEnd, String email, int maxClics, int clicsCounter, String dateCreation) {
 
         UrlEntity url = new UrlEntity();
         url.setUserId(String.valueOf(userId));
