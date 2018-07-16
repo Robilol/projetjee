@@ -136,7 +136,7 @@ public class LinkServlet extends HttpServlet {
                 }
             }
 
-            if (urlObject.getPassword() != "") {
+            if (!urlObject.getPassword().equals("")) {
                 checks.put("password", false);
             }
 
